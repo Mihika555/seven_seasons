@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% block meta %}
+{% endblock %}
+{% block title %}
+    | Profile
+{% endblock %}
+{% block main %}
+    <style>
+        .profile_picture_container img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            margin-bottom: 30px;
+        }
+
+        .form-container {
+            border-radius: 10px;
+            box-shadow: 1px 1px 10px #000;
+            -webkit-box-shadow: 1px 1px 10px #000;
+            padding: 20px;
+        }
+
+        .order-history {
+            border-radius: 10px;
+            box-shadow: 1px 1px 10px #000;
+            -webkit-box-shadow: 1px 1px 10px #000;
+            padding: 20px;
+            overflow: scroll;
+        }
+
+        .order-history p {
+            text-align: center;
+        }
+
+        .order-history p a {
+            background-color: #29b695;
+            color: #fff;
+        }
+
+        .order-history p a:hover {
+            color: #fff;
+        }
+
+        .order-history .collapse .card p {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .order-history .collapse .card p label {
+            color: darkmagenta;
+            text-decoration: underline;
+        }
+    </style>
+
+    <div class="container mt-5">
+        <div class="profile_picture_container text-center">
+            {% if user_profile.profile_picture %}
+                <img src="{{ user_profile.profile_picture.url }}" alt="Profile Picture">
+            {% else %}
+                <img src="{% static 'images/default_img.jpg' %}" alt="Profile Picture">
+            {% endif %}
+            <p>{{ user.email }}</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-6 col-md-6 col-sm-12 form-container">
+                <h3 class="text-center">Settings</h3>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        {{ form|crispy }}
+                    </fieldset>
+                    <div class="form-group mt-3">
+                        <button class="btn btn-outline-success">Save</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 order-history">
+                <h3 class="text-center mb-5">Orders</h3>
+                {% for order in orders %}
+                    <div class="row">
+                        <p>
+                            <a class="btn" data-bs-toggle="collapse" href="#collapseExample{{ order.id }}" role="button"
+                               aria-expanded="false" aria-controls="collapseExample{{ order.id }}">
+                                {{ order.order_item.quantity }} {{ order.order_item.item.unit }}s {{ order.order_item.item.name }}
+                                on {{ order.created }}
+                            </a>
+                        </p>
+                        <div class="collapse" id="collapseExample{{ order.id }}">
+                            <div class="card card-body">
+                                <p>
+                                    <label>Quantity:</label> {{ order.order_item.quantity }} {{ order.order_item.item.unit }}
+                                </p>
+                                <p><label>Fruit Price:</label> {{ order.get_totals }}</p>
+                                <p><label>Transition Id:</label> {{ order.payment_id }}</p>
+                                <p><label>Order Id:</label> {{ order.order_id }}</p>
+                                <p><label>Status:</label> {{ order.status }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js_script %}
+    fruit_shop.classList.remove('active');
+    home.classList.remove('active');
+    about.classList.remove('active')
+    blog.classList.remove('active')
+    contact.classList.remove('active')
+    profile.classList.add('active')
+{% endblock %}

@@ -1,0 +1,159 @@
+{% extends 'App_admin/base_admin.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+{% block main %}
+    <style>
+        .my-card {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ac2925;
+            height: fit-content;
+        }
+
+        .store_image img {
+            height: 30px;
+            width: 30px;
+        }
+
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        table caption {
+            font-size: 1.5em;
+            margin: .5em 0 .75em;
+        }
+
+        table tr {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: .35em;
+        }
+
+        table th,
+        table td {
+            padding: .625em;
+            text-align: center;
+        }
+
+        table th {
+            font-size: .85em;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        @media screen and (max-width: 600px) {
+            table {
+                border: 0;
+            }
+
+            table caption {
+                font-size: 1.3em;
+            }
+
+            table thead {
+                border: none;
+                clip: rect(0 0 0 0);
+                height: 1px;
+                margin: -1px;
+                overflow: hidden;
+                padding: 0;
+                position: absolute;
+                width: 1px;
+            }
+
+            table tr {
+                border-bottom: 3px solid #ddd;
+                display: block;
+                margin-bottom: .625em;
+            }
+
+            table td {
+                border-bottom: 1px solid #ddd;
+                display: block;
+                font-size: .8em;
+                text-align: right;
+            }
+
+            table td::before {
+                /*
+                * aria-label has no advantage, it won't be read inside a table
+                content: attr(aria-label);
+                */
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            table td:last-child {
+                border-bottom: 0;
+            }
+        }
+    </style>
+    <p style="text-align: center; margin-top: 20px;">
+        <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+           aria-controls="collapseExample">
+            Store Verifications
+        </a>
+    </p>
+    <div class="collapse" id="collapseExample">
+        <table>
+            <thead>
+            <tr>
+                <th scope="col">User</th>
+                <th scope="col">Contact</th>
+                <th scope="col">Shop Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Verification Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if requested_stores %}
+                {% for store in requested_stores %}
+                    <tr>
+                        <td data-label="User">{{ store.seller.profile.full_name }}</td>
+                        <td data-label="Contact">{{ store.seller.profile.phone_number }}</td>
+                        <td data-label="Shop Name">{{ store.shop_name }}</td>
+                        <td data-label="Address">{{ store.address }}</td>
+                        <td data-label="Verification Status">
+                            <form action="{% url 'App_admin:verify-store' pk=store.id %}" method="get">
+                                <button type="submit" class="btn btn-success" name="verify">Verify</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td style="color: #ac2925; font-weight: bold">No Requested Stores</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <div class="container mt-5">
+        <div class="row">
+            {% for store in stores %}
+                <div class="col-md-3 my-card">
+                    <div class="store_name">
+                        <h3>{{ store.shop_name }}</h3>
+                    </div>
+                    <div class="store_image" style="float: right;">
+                        <img src="{% static 'images/icons/shop.png' %}" alt="Shop Icon">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

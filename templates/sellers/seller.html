@@ -1,0 +1,79 @@
+{% extends 'sellers/seller_base.html' %}
+{% load static %}
+{% block title %}
+
+{% endblock %}
+{% block main %}
+    <style>
+        .card-style {
+            border-radius: 10px;
+        }
+
+        .left-header {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .right-digit {
+            text-align: right;
+            font-weight: bold;
+            font-size: 40px;
+            padding: 15px;
+            margin-top: 40px;
+        }
+    </style>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-style">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row left-header">
+                                <p>Total Orders</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row right-digit">
+                                <p>{{ my_orders.count }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-style">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row left-header">
+                                <p>Total Completes</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row right-digit">
+                                <p>{{ completed_order.count }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-style">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row left-header">
+                                <p>Total Cancels</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row right-digit">
+                                <p>{{ canceled_order.count }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

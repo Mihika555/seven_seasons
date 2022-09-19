@@ -1,0 +1,734 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+{% endblock %}
+{% block title %}
+    | Home
+{% endblock %}
+{% block main %}
+    <style>
+        .jumbotron {
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 990px !important;
+        }
+
+        .hero-text {
+            text-align: center;
+        }
+
+        .hero-text h1 {
+            color: #ffffff;
+            font-family: "Raleway", sans-serif;
+            font-size: 45px;
+            padding-top: 180px;
+        }
+
+        .hero-text button {
+            background-color: #4883ff;
+            font-family: "Raleway", sans-serif;
+            border: 3px solid #4883ff;
+            color: #ffffff;
+        }
+
+        .hero-text button:hover {
+            background-color: transparent;
+            border: 3px solid #4883ff;
+            color: #ffffff;
+        }
+
+        .hero-container {
+            position: relative !important;
+            overflow: hidden !important;
+        }
+
+        .mySlides {
+            display: none;
+            height: 850px;
+        }
+
+        /*------------------------------------------------------------------ Categories Shop -------------------------------------------------------------------*/
+        .categories-shop {
+            padding: 70px 0px;
+        }
+
+        .shop-cat-box {
+            margin-bottom: 30px;
+            position: relative;
+            padding: 3px;
+            overflow: hidden;
+            border: 0px solid #000000;
+            box-shadow: 9px 9px 30px 0px rgba(0, 0, 0, 0.3);
+            -webkit-transition: all 0.3s ease;
+            transition: all 0.3s ease-in-out 0s;
+        }
+
+        .shop-cat-box img {
+            margin: -10px 0 0 -10px;
+            max-width: none;
+            width: -webkit-calc(100% + 10px);
+            width: calc(100% + 10px);
+            opacity: 0.9;
+            -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+            transition: opacity 0.35s, transform 0.35s;
+            -webkit-transform: translate3d(10px, 10px, 0);
+            transform: translate3d(10px, 10px, 0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            height: 300px;
+        }
+
+        .shop-cat-box:hover img {
+            opacity: 0.6;
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+
+        .shop-cat-box a {
+            position: absolute;
+            z-index: 2;
+            bottom: 0px;
+            left: 0px;
+            right: 0;
+            margin: 0 auto;
+            text-align: center;
+            border: none;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 700;
+            padding: 12px 0px;
+        }
+
+        .box-add-products {
+            padding: 70px 0px;
+            background-color: #f4f4f4;
+        }
+
+        .box-add-products img {
+            height: 308px;
+            width: 100%;
+        }
+
+        .offer-box {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .offer-box-products {
+            box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
+            -webkit-transition: all 0.3s ease;
+            transition: all 0.3s ease-in-out 0s;
+        }
+
+        .offer-box-products:hover {
+            -webkit-transform: translateY(6px);
+            transform: translateY(6px);
+            box-shadow: 0px 9px 15px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .hvr-hover {
+            display: inline-block;
+            vertical-align: middle;
+            -webkit-transform: perspective(1px) translateZ(0);
+            transform: perspective(1px) translateZ(0);
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+            position: relative;
+            background: #b0b435;
+            -webkit-transition-property: color;
+            transition-property: color;
+            -webkit-transition-duration: 0.3s;
+            transition-duration: 0.3s;
+            border-radius: 0;
+            color: #FFFFFF;
+        }
+
+        .hvr-hover::after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #000000;
+            border-radius: 100%;
+            -webkit-transform: scale(0);
+            transform: scale(0);
+            -webkit-transition-property: transform;
+            transition-property: transform;
+            -webkit-transition-duration: 0.3s;
+            transition-duration: 0.3s;
+            -webkit-transition-timing-function: ease-out;
+            transition-timing-function: ease-out;
+        }
+
+        .hvr-hover:hover::after {
+            -webkit-transform: scale(2);
+            transform: scale(2);
+            color: #ffffff !important;
+        }
+
+        .hvr-hover {
+            overflow: hidden;
+            color: #FFFFFF !important;
+        }
+
+        /*------------------------------------------------------------------ Products -------------------------------------------------------------------*/
+        .title-all {
+            margin-bottom: 30px;
+        }
+
+        .title-all h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .title-all p {
+            color: #999999;
+            font-size: 16px;
+        }
+
+        .products-box {
+            padding: 70px 0px;
+        }
+
+        .special-menu {
+            margin-bottom: 40px;
+        }
+
+        .filter-button-group {
+            display: inline-block;
+        }
+
+        .filter-button-group button {
+            background: #b0b435;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            padding: 5px 30px;
+            font-size: 18px;
+        }
+
+        .filter-button-group button.active {
+            background: #000000;
+        }
+
+        .filter-button-group button {
+        }
+
+        .products-single {
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .products-single .box-img-hover {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .box-img-hover img {
+            margin: 0 auto;
+            text-align: center;
+            display: block;
+            height: 220px !important;
+        }
+
+        .type-lb {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            z-index: 8;
+        }
+
+        .type-lb .sale {
+            background: #b0b435;
+            color: #ffffff;
+            padding: 2px 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .type-lb .new {
+            background: #000000;
+            color: #ffffff;
+            padding: 2px 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .why-text {
+            background: #f5f5f5;
+            padding: 15px;
+        }
+
+        .why-text h4 {
+            font-size: 16px;
+            font-weight: 700;
+            padding-bottom: 15px;
+        }
+
+        .why-text h5 {
+            font-size: 18px;
+            font-family: 'Poppins', sans-serif;
+            padding: 4px;
+            display: inline-block;
+            background: #b0b435;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .mask-icon {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+        }
+
+        .mask-icon ul {
+            display: inline-block;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+
+        .mask-icon ul li {
+            background: #b0b435;
+        }
+
+        .mask-icon ul li a {
+            color: #ffffff;
+            padding: 5px 10px;
+            display: block;
+        }
+
+        .mask-icon a.cart {
+            background: #b0b435;
+            position: absolute;
+            bottom: 0;
+            left: 0px;
+            padding: 10px 20px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .mask-icon a.cart:hover {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .mask-icon ul li a:hover {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .products-single .mask-icon {
+            background: rgba(1, 1, 1, 0.5);
+            top: -100%;
+            -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+            filter: alpha(opacity=0);
+            opacity: 0;
+            -webkit-transition: all 0.3s ease-out 0.5s;
+            -moz-transition: all 0.3s ease-out 0.5s;
+            -o-transition: all 0.3s ease-out 0.5s;
+            -ms-transition: all 0.3s ease-out 0.5s;
+            transition: all 0.3s ease-out 0.5s;
+        }
+
+        .products-single:hover .mask-icon {
+            -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
+            filter: alpha(opacity=100);
+            opacity: 1;
+            top: 0px;
+            -webkit-transition-delay: 0s;
+            -moz-transition-delay: 0s;
+            -o-transition-delay: 0s;
+            -ms-transition-delay: 0s;
+            transition-delay: 0s;
+            -webkit-animation: bounceY 0.9s linear;
+            -moz-animation: bounceY 0.9s linear;
+            -ms-animation: bounceY 0.9s linear;
+            animation: bounceY 0.9s linear;
+        }
+
+        .blog-img img {
+            height: 450px;
+        }
+
+        .blog-content {
+            height: 200px;
+        }
+
+        @keyframes bounceY {
+            0% {
+                transform: translateY(-205px);
+            }
+            40% {
+                transform: translateY(-100px);
+            }
+            65% {
+                transform: translateY(-52px);
+            }
+            82% {
+                transform: translateY(-25px);
+            }
+            92% {
+                transform: translateY(-12px);
+            }
+            55%, 75%, 87%, 97%, 100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @-moz-keyframes bounceY {
+            0% {
+                -moz-transform: translateY(-205px);
+            }
+            40% {
+                -moz-transform: translateY(-100px);
+            }
+            65% {
+                -moz-transform: translateY(-52px);
+            }
+            82% {
+                -moz-transform: translateY(-25px);
+            }
+            92% {
+                -moz-transform: translateY(-12px);
+            }
+            55%, 75%, 87%, 97%, 100% {
+                -moz-transform: translateY(0px);
+            }
+        }
+
+        @-webkit-keyframes bounceY {
+            0% {
+                -webkit-transform: translateY(-205px);
+            }
+            40% {
+                -webkit-transform: translateY(-100px);
+            }
+            65% {
+                -webkit-transform: translateY(-52px);
+            }
+            82% {
+                -webkit-transform: translateY(-25px);
+            }
+            92% {
+                -webkit-transform: translateY(-12px);
+            }
+            55%, 75%, 87%, 97%, 100% {
+                -webkit-transform: translateY(0px);
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            .shop-cat-box img {
+                height: auto;
+            }
+
+            .box-add-products img {
+                height: auto;
+                width: 100%;
+                margin: 10px;
+            }
+
+            .box-img-hover img {
+                height: 235px;
+            }
+
+            .blog-img img {
+                height: auto;
+            }
+
+
+        }
+
+        /*------------------------------------------------------------------ Blog -------------------------------------------------------------------*/
+        .latest-blog {
+            padding: 70px 0px;
+            background: #f5f5f5;
+        }
+
+        .blog-box {
+            -webkit-box-shadow: 0px 5px 35px 0px rgba(148, 146, 245, 0.15);
+            box-shadow: 0px 5px 35px 0px rgba(148, 146, 245, 0.15);
+            background: #ffffff;
+            margin-bottom: 30px;
+        }
+
+        .blog-content {
+            position: relative;
+        }
+
+        .title-blog {
+            padding: 40px 30px 40px 30px;
+        }
+
+        .title-blog h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .title-blog p {
+            margin: 0px;
+        }
+
+        .option-blog {
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .option-blog li {
+            display: inline-block;
+        }
+
+        .option-blog li a {
+            background: #000000;
+            display: inline-block;
+            font-size: 18px;
+            color: #ffffff;
+            width: 34px;
+            height: 34px;
+            text-align: center;
+            line-height: 34px;
+        }
+
+        .option-blog li a:hover {
+            background: #b0b435;
+            color: #ffffff;
+        }
+
+        .tooltip-inner {
+            background-color: #b0b435;
+        }
+
+        .tooltip.bs-tooltip-right .arrow:before {
+            border-right-color: #b0b435 !important;
+            padding-top: 0px !important;
+            top: 0px !important;
+        }
+
+        .tooltip.bs-tooltip-left .arrow:before {
+            border-left-color: #b0b435 !important;
+            padding-top: 0px !important;
+            padding-right: 5px !important;
+            top: 0px !important;
+        }
+
+        .tooltip.bs-tooltip-bottom .arrow:before {
+            border-right-color: #b0b435 !important;
+        }
+
+        .tooltip.bs-tooltip-top .arrow:before {
+            border-top-color: #b0b435 !important;
+            padding-top: 0px !important;
+            top: 0px !important;
+        }
+    </style>
+    <section>
+        <div class="jumbotron">
+            <div class="hero-text">
+                <div class="hero-container">
+                    <img class="mySlides" src="{% static 'images/bucket.jpg' %}" style="width:100%">
+                    <img class="mySlides" src="{% static 'images/bucket_2.jpg' %}" style="width:100%">
+                    <img class="mySlides" src="{% static 'images/bucket_4.jpg' %}" style="width:100%">
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Categories  -->
+        <div class="categories-shop">
+            <div class="container">
+                <div class="row">
+                    {% for product in first_three_products %}
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <div class="shop-cat-box">
+                                <img class="img-fluid" src="{{ product.main_image.url }}" alt="Product Image"/>
+                                <a class="btn hvr-hover" href="{% url 'App_product:single-fruit' pk=product.id %}">
+                                    Buy Now
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- End Categories -->
+
+        <div class="box-add-products">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="offer-box-products">
+                            <img class="img-fluid" src="{{ products.0.main_image.url }}" alt=""/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="offer-box-products">
+                            <img class="img-fluid" src="{{ products.1.main_image.url }}" alt=""/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Products  -->
+        <div class="products-box">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="title-all text-center">
+                            <h1 style="color: #ee0707"> Fruits & Vegetables</h1>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet lacus enim.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row special-list">
+                        {% for product, id in random_eight %}
+                            <div class="col-lg-3 col-md-6">
+                                <div class="products-single fix">
+                                    <div class="box-img-hover">
+                                        <div class="type-lb">
+                                            {% ifequal id 2 %}
+                                                <p class="sale">Sale</p>
+                                            {% endifequal %}
+                                            {% ifequal id 1 %}
+                                                <p class="new">New</p>
+                                            {% endifequal %}
+                                        </div>
+                                        <img src="{{ product.main_image.url }}" class="img-fluid" alt="Image">
+                                        <div class="mask-icon">
+                                            <a class="cart" href="#" data-bs-toggle="modal"
+                                               data-bs-target="#exampleModal{{ product.id }}">
+                                                Add to Cart
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="why-text">
+                                        <h4>{{ product.name }}</h4>
+                                        <h5> ৳ {{ product.price }} / {{ product.unit }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal{{ product.id }}" tabindex="-1"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Write Down The Quantity</h5>
+                                            <button type="button" class="btn-close"
+                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form method="post" action="{% url 'App_order:add-to-cart' %}"
+                                              class="form-group">
+                                            {% csrf_token %}
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <span>{{ product.price }} / </span>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="number" name="quantity" min="1" value="1"
+                                                               id="id-quantity" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <span>{{ product.unit }}</span>
+                                                    </div>
+                                                </div>
+                                                <input type="number" name="pk" value="{{ product.id }}"
+                                                       style="display: none;" class="form-control">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Add to
+                                                    cart
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Products  -->
+
+        <!-- Start Blog  -->
+        <div class="latest-blog">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="title-all text-center">
+                            <h1>Latest blog</h1>
+                            <p> To write or read blogs about fruit please visit blog section </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for blog in first_six_blogs %}
+                        <div class="col-md-6 col-lg-4 col-xl-4">
+                            <div class="blog-box">
+                                <div class="blog-img">
+                                    <img class="img-fluid" src="{{ blog.image1.url }}" alt="Blog Image"/>
+                                </div>
+                                <div class="blog-content">
+                                    <div class="title-blog">
+                                        <h3>{{ blog.blog_title }}</h3>
+                                        <p>{{ blog|truncatewords_html:60|safe }}</p>
+                                    </div>
+                                    <ul class="option-blog">
+                                        <li><a href="#"><i class="far fa-heart"></i></a></li>
+                                        <li><a href="#"><i class="fas fa-eye"></i></a></li>
+                                        <li><a href="#"><i class="far fa-comments"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- End Blog  -->
+    </section>
+
+    <script>
+        let myIndex = 0;
+        carousel();
+
+        function carousel() {
+            let i;
+            let x = document.getElementsByClassName("mySlides");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            myIndex++;
+            if (myIndex > x.length) {
+                myIndex = 1
+            }
+            x[myIndex - 1].style.display = "block";
+            setTimeout(carousel, 5000); // Change image every 2 seconds
+        }
+    </script>
+{% endblock %}
+{% block js_script %}
+    fruit_shop.classList.remove('active');
+    home.classList.add('active');
+    about.classList.remove('active')
+    blog.classList.remove('active')
+    profile.classList.remove('active')
+    contact.classList.remove('active')
+    cart.classList.remove('active')
+{% endblock %}

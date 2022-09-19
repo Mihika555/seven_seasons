@@ -1,0 +1,79 @@
+{% extends 'App_admin/base_admin.html' %}
+{% load static %}
+{% block title %}
+
+{% endblock %}
+{% block main %}
+    <style>
+    .card {
+        border-radius: 10px;
+        background-color: #c7ddef;
+        margin: 5px;
+    }
+    </style>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-img"></div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p>Verified Stores:</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h3>{{ verified_stores }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-img"></div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p>Requested Stores:</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h3>{{ requested_stores }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-img"></div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p>Total Fruits:</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h3>{{ all_fruits }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-img"></div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p>Total Orders:</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h3>{{ total_orders }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

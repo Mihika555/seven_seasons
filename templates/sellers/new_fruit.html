@@ -1,0 +1,81 @@
+{% extends 'sellers/seller_base.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+{% block title %}
+{% endblock %}
+{% block main %}
+    <style>
+        .btn-submit-new-fruit {
+            background-color: #8a6d3b;
+        }
+
+        form {
+            border: 1px solid #ac2925;
+            padding: 20px;
+            margin: 10px 0;
+        }
+
+        label {
+            margin-top: 20px;
+        }
+
+        input {
+            border-radius: 5px !important;
+        }
+
+        input[type=file] {
+            border-radius: 0 !important;
+            padding: 0;
+        }
+    </style>
+    <div class="container" style="margin-top: 50px;">
+        <div class="row" style="text-align: center;">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 w-100">
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                   aria-expanded="false"
+                   aria-controls="collapseExample">
+                    Open Form
+                </a>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row collapse" id="collapseExample">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <form method="post" class="form-group" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset class="form-group"> {{ form|crispy }} </fieldset>
+                    <div class="form-group mt-2">
+                        <button class="btn btn-submit-new-fruit">
+                            Post
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 50px;">
+        <div class="row">
+            {% for fruit in my_fruits %}
+                <div class="col-lg-3 col-md-3 col-sm-6">
+                    <div class="card" style="margin: 2px;">
+                        <img src="{{ fruit.main_image.url }}" class="card-img-top" alt="Main Image">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <p class="card-text">
+                                {{ fruit.preview_text }}
+                            </p>
+                            <p>
+                                Price: {{ fruit.price }} per {{ fruit.unit }}
+                            </p>
+                            <a href="{% url 'App_product:single-fruit' pk=fruit.id %}" class="btn btn-primary">See
+                                Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

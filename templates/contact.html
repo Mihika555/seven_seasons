@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block meta %}
+{% endblock %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% block title %}
+
+{% endblock %}
+{% block main %}
+    <style>
+        .contact-form {
+            margin: 20px 0 100px;
+        }
+
+        .contact-form form {
+            padding: 20px;
+            box-shadow: 1px 1px 10px #000;
+            -webkit-box-shadow: 1px 1px 10px #000;
+        }
+
+        .contact-form form legend {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .contact-form form label {
+            margin-top: 30px;
+        }
+    </style>
+
+    <div class="row contact-form">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <form method="post" class="form-group">
+                {% csrf_token %}
+                <legend>Feedback</legend>
+                <br>
+                <hr>
+                <fieldset class="form-group">
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group mt-3">
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+{% endblock %}
+{% block js_script %}
+    fruit_shop.classList.remove('active');
+    home.classList.remove('active');
+    about.classList.remove('active')
+    blog.classList.remove('active')
+    profile.classList.remove('active')
+    cart.classList.remove('active')
+    contact.classList.add('active')
+{% endblock %}

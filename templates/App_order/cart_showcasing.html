@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+
+{% endblock %}
+{% block title %}
+
+{% endblock %}
+{% block main %}
+    <style>
+
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        table caption {
+            font-size: 1.5em;
+            margin: .5em 0 .75em;
+        }
+
+        table tr {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: .35em;
+        }
+
+        table th,
+        table td {
+            padding: .625em;
+            text-align: center;
+        }
+
+        table th {
+            font-size: .85em;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            background-color: cornflowerblue;
+            color: #fff;
+        }
+
+        @media screen and (max-width: 600px) {
+            table {
+                border: 0;
+            }
+
+            table thead {
+                border: none;
+                clip: rect(0 0 0 0);
+                height: 1px;
+                margin: -1px;
+                overflow: hidden;
+                padding: 0;
+                position: absolute;
+                width: 1px;
+            }
+
+            table tr {
+                border-bottom: 3px solid #ddd;
+                display: block;
+                margin-bottom: .625em;
+            }
+
+            table td {
+                border-bottom: 1px solid #ddd;
+                display: block;
+                font-size: .8em;
+                text-align: right;
+            }
+
+            table td::before {
+                /*
+                * aria-label has no advantage, it won't be read inside a table
+                content: attr(aria-label);
+                */
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            table td:last-child {
+                border-bottom: 0;
+            }
+        }
+
+        .order-details {
+            padding: 30px;
+            box-shadow: 0 0 10px #000;
+            -webkit-box-shadow: 0 0 10px #000;
+            border-radius: 5px;
+        }
+
+        .instruction {
+            padding: 20px;
+            box-shadow: 0 0 10px #000;
+            -webkit-box-shadow: 0 0 10px #000;
+            border-radius: 5px;
+        }
+
+        .instruction h3 {
+            text-align: center;
+        }
+
+        .order-instructions {
+            line-height: 2;
+        }
+
+        .order-instructions li {
+            font-size: 15px;
+        }
+
+        .product_price_para {
+            font-size: 20px;
+        }
+
+        .product_price {
+            float: right;
+        }
+
+        .btn-place-order {
+            border: none;
+            background-color: #00b842;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            transition: .2s;
+        }
+
+        .btn-place-order:hover {
+            background-color: transparent;
+            color: #00b842;
+            border-radius: 5px;
+            border: 1px solid #00b842;
+            transition: .2s;
+        }
+    </style>
+    <legend class="text-center">Cart Items</legend>
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+            <th scope="col">Total Price</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for cart in carts %}
+            <tr>
+                <td data-label="Name">
+                    <a href="{% url 'App_product:single-fruit' pk=cart.item.id %}">{{ cart.item.name }}</a>
+                </td>
+                <td data-label="Quantity" id="quantity">
+                    <form method="post" action="{% url 'App_order:update-cart-quantity' %}">
+                        {% csrf_token %}
+                        <input type="number" name="quantity" min="1" value="{{ cart.quantity }}"
+                               style="width: 30%; text-align: center;">
+                        <input type="number" name="cart_item" value="{{ cart.id }}" style="display: none;">
+                        <button type="submit" class="btn-outline-info" style="border: none;">
+                            <i class="fa fa-refresh"></i>
+                        </button>
+                    </form>
+                </td>
+                <td data-label="Price">৳ <span id="price">{{ cart.item.price }}</span>/{{ cart.item.unit }}</td>
+                <td data-label="Total Price">{{ cart.get_total }}</td>
+                <td data-label="Action">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input name="cart_pk" type="text" value="{{ cart.id }}" style="display: none">
+                        <button type="submit" class="btn btn-danger">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="container" style="margin: 100px auto;">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 instruction">
+                <h3>Order Instructions</h3>
+                <hr>
+                <ul class="order-instructions">
+                    <li>
+                        There is no value added tax over fruit price.
+                    </li>
+                    <li>
+                        Delivery charge varies from vendor to vendor.
+                    </li>
+                    <li>
+                        If you're ordering from different vendors at the same time, you may get the product at different
+                        times.
+                    </li>
+                    <li>
+                        Whenever, you change the quantity from the cart, don't forget to press upgrade button. &nbsp;
+                        <i class="fa fa-refresh" style="font-size: 16px; color: #0dcaf0;"></i>
+                    </li>
+                    <li>
+                        For every product the delivery charge will be added unless multiple products belong to the same
+                        vendor.
+                    </li>
+                    <li></li>
+                </ul>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 order-details">
+                <h3 style="text-align: center; margin-bottom: 30px;">Order Details</h3>
+                <hr>
+                <p class="product_price_para">
+                    <span><b>Sub-total Price:</b></span>
+                    <span class="product_price">৳ {{ fruit_price }}</span>
+                </p>
+                <p class="product_price_para">
+                    <span><b>Delivery Charge:</b></span>
+                    <span class="product_price">৳ {{ delivery_charge }}</span>
+                </p>
+                <hr>
+                <p class="product_price_para">
+                    <span><b>Total cost:</b></span>
+                    <span class="product_price">৳ {{ total_cost }}</span>
+                </p>
+                <p class="product_price_para" style="float: right; margin-top: 20px;">
+                    <button class="btn-place-order" type="button"
+                            onclick="window.location.href='{% url "App_payment:checkout-page" %}'">
+                        Place order
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js_script %}
+    fruit_shop.classList.remove('active');
+    home.classList.remove('active');
+    about.classList.remove('active')
+    blog.classList.remove('active')
+    profile.classList.remove('active')
+    contact.classList.remove('active')
+    cart.classList.add('active')
+{% endblock %}

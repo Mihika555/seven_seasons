@@ -1,0 +1,463 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+
+{% endblock %}
+{% block title %}
+    | Fruit Shop
+{% endblock %}
+{% block main %}
+    <style>
+        .card {
+            height: 400px !important;
+        }
+
+        .card img {
+            height: 230px;
+        }
+
+        /*------------------------------------------------------------------ All Pages -------------------------------------------------------------------*/
+        .all-title-box {
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -ms-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            text-align: center;
+            background: url("{% static 'images/banner/banner_title_pic_2.jpg' %}") no-repeat fixed center center;
+            padding: 70px 0;
+            position: relative;
+        }
+
+        .all-title-box::before {
+        {#background: rgba(0, 0, 0, 0.6);#} content: "";
+            position: absolute;
+            z-index: 0;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+        }
+
+        .all-title-box h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+            float: left;
+            padding: 10px 0;
+        }
+
+        .all-title-box .breadcrumb {
+            background: #b0b435 !important;
+            padding: 10px;
+            margin: 0;
+            display: inline-block;
+            border-radius: 0;
+            float: right;
+        }
+
+        .all-title-box .breadcrumb li {
+            display: inline-block;
+            color: #000000;
+            font-size: 16px;
+        }
+
+        .all-title-box .breadcrumb li a {
+            color: #ffffff;
+            font-size: 16px;
+        }
+
+        .all-title-box .breadcrumb-item + .breadcrumb-item::before {
+            color: #000000;
+        }
+
+        /*------------------------------------------------------------------ Products -------------------------------------------------------------------*/
+        .title-all {
+            margin-bottom: 30px;
+        }
+
+        .title-all h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .title-all p {
+            color: #999999;
+            font-size: 16px;
+        }
+
+        .products-box {
+            padding: 70px 0px;
+        }
+
+        .special-menu {
+            margin-bottom: 40px;
+        }
+
+        .filter-button-group {
+            display: inline-block;
+        }
+
+        .filter-button-group button {
+            background: #b0b435;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            padding: 5px 30px;
+            font-size: 18px;
+        }
+
+        .filter-button-group button.active {
+            background: #000000;
+        }
+
+        .filter-button-group button {
+        }
+
+        .products-single {
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .products-single .box-img-hover {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .box-img-hover img {
+            margin: 0 auto;
+            text-align: center;
+            display: block;
+        }
+
+        .type-lb {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            z-index: 8;
+        }
+
+        .type-lb .sale {
+            background: #b0b435;
+            color: #ffffff;
+            padding: 2px 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .type-lb .new {
+            background: #000000;
+            color: #ffffff;
+            padding: 2px 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .why-text {
+            background: #f5f5f5;
+            padding: 15px;
+        }
+
+        .why-text h4 {
+            font-size: 16px;
+            font-weight: 700;
+            padding-bottom: 15px;
+        }
+
+        .why-text h5 {
+            font-size: 18px;
+            font-family: 'Poppins', sans-serif;
+            padding: 4px;
+            display: inline-block;
+            background: #b0b435;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .mask-icon {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+        }
+
+        .mask-icon ul {
+            display: inline-block;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+
+        .mask-icon ul li {
+            background: #b0b435;
+        }
+
+        .mask-icon ul li a {
+            color: #ffffff;
+            padding: 5px 10px;
+            display: block;
+        }
+
+        .mask-icon a.cart {
+            background: #b0b435;
+            position: absolute;
+            bottom: 0;
+            left: 0px;
+            padding: 10px 20px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .mask-icon a.cart:hover {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .mask-icon ul li a:hover {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .products-single .mask-icon {
+            background: rgba(1, 1, 1, 0.5);
+            top: -100%;
+            -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+            filter: alpha(opacity=0);
+            opacity: 0;
+            -webkit-transition: all 0.3s ease-out 0.5s;
+            -moz-transition: all 0.3s ease-out 0.5s;
+            -o-transition: all 0.3s ease-out 0.5s;
+            -ms-transition: all 0.3s ease-out 0.5s;
+            transition: all 0.3s ease-out 0.5s;
+        }
+
+        .products-single:hover .mask-icon {
+            -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
+            filter: alpha(opacity=100);
+            opacity: 1;
+            top: 0px;
+            -webkit-transition-delay: 0s;
+            -moz-transition-delay: 0s;
+            -o-transition-delay: 0s;
+            -ms-transition-delay: 0s;
+            transition-delay: 0s;
+            -webkit-animation: bounceY 0.9s linear;
+            -moz-animation: bounceY 0.9s linear;
+            -ms-animation: bounceY 0.9s linear;
+            animation: bounceY 0.9s linear;
+        }
+
+        @keyframes bounceY {
+            0% {
+                transform: translateY(-205px);
+            }
+            40% {
+                transform: translateY(-100px);
+            }
+            65% {
+                transform: translateY(-52px);
+            }
+            82% {
+                transform: translateY(-25px);
+            }
+            92% {
+                transform: translateY(-12px);
+            }
+            55%, 75%, 87%, 97%, 100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @-moz-keyframes bounceY {
+            0% {
+                -moz-transform: translateY(-205px);
+            }
+            40% {
+                -moz-transform: translateY(-100px);
+            }
+            65% {
+                -moz-transform: translateY(-52px);
+            }
+            82% {
+                -moz-transform: translateY(-25px);
+            }
+            92% {
+                -moz-transform: translateY(-12px);
+            }
+            55%, 75%, 87%, 97%, 100% {
+                -moz-transform: translateY(0px);
+            }
+        }
+
+        @-webkit-keyframes bounceY {
+            0% {
+                -webkit-transform: translateY(-205px);
+            }
+            40% {
+                -webkit-transform: translateY(-100px);
+            }
+            65% {
+                -webkit-transform: translateY(-52px);
+            }
+            82% {
+                -webkit-transform: translateY(-25px);
+            }
+            92% {
+                -webkit-transform: translateY(-12px);
+            }
+            55%, 75%, 87%, 97%, 100% {
+                -webkit-transform: translateY(0px);
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            .shop-cat-box img {
+                height: auto;
+            }
+
+            .box-add-products img {
+                height: auto;
+                width: 100%;
+                margin: 10px;
+            }
+        }
+    </style>
+
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Products  -->
+    <div class="products-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="title-all text-center">
+                        <h1>Fruits & Vegetables</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet lacus enim.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row special-list">
+                    {% for product in fruits %}
+                        <div class="col-lg-3 col-md-6">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <div class="type-lb">
+                                        {% ifequal id 2 %}
+                                            <p class="sale">Sale</p>
+                                        {% endifequal %}
+                                        {% ifequal id 1 %}
+                                            <p class="new">New</p>
+                                        {% endifequal %}
+                                    </div>
+                                    <img src="{{ product.main_image.url }}" class="img-fluid" alt="Image">
+                                    <div class="mask-icon">
+                                        <a class="cart" href="#" data-bs-toggle="modal"
+                                           data-bs-target="#exampleModal{{ product.id }}">
+                                            Add to Cart
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="why-text">
+                                    <h4>
+                                        <a style="text-decoration: none; font-weight: bold; color: #000000"
+                                           href="{% url 'App_product:single-fruit' pk=product.id %}">
+                                            {{ product.name }}
+                                        </a>
+                                    </h4>
+                                    <p>{{ product.preview_text }}</p>
+                                    <h5> ৳ {{ product.price }} / {{ product.unit }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal{{ product.id }}" tabindex="-1"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Write Down The Quantity</h5>
+                                        <button type="button" class="btn-close"
+                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form method="post" action="{% url 'App_order:add-to-cart' %}"
+                                          class="form-group">
+                                        {% csrf_token %}
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <span>{{ product.price }} / </span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="number" name="quantity" min="1" value="1"
+                                                           id="id-quantity" class="form-control">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <span>{{ product.unit }}</span>
+                                                </div>
+                                            </div>
+                                            <input type="number" name="pk" value="{{ product.id }}"
+                                                   style="display: none;" class="form-control">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Add to
+                                                cart
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Products  -->
+
+    <!--
+    <div class="container" style="margin: 50px auto;">
+        <div class="row">
+            {% for fruit in fruits %}
+                <div class="col-lg-3 col-md-3 col-sm-6">
+                    <div class="card" style="margin: 2px;">
+                        <img src="{{ fruit.main_image.url }}" class="card-img-top" alt="Main Image">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <p class="card-text">
+                                {{ fruit.preview_text }}
+                            </p>
+                            <p>
+                                Price: {{ fruit.price }} per {{ fruit.unit }}
+                            </p>
+                            <a href="{% url 'App_product:single-fruit' pk=fruit.id %}" class="btn btn-primary">See
+                                Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    -->
+{% endblock %}
+{% block js_script %}
+    fruit_shop.classList.add('active');
+    home.classList.remove('active');
+    about.classList.remove('active')
+    blog.classList.remove('active')
+    profile.classList.remove('active')
+    cart.classList.remove('active')
+    contact.classList.remove('active')
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% block meta %}
+{% endblock %}
+{% block title %}
+    | Blogs
+{% endblock %}
+{% block main %}
+    <style>
+        .write-button {
+            margin-bottom: 50px;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 250px;
+        }
+    </style>
+
+    <div class="container" style="margin-top: 50px;">
+        <div class="row text-center write-button">
+            <div class="col-lg-4 col-md-4 col-sm-4"></div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <a href="{% url 'App_blog:blog_writing' %}" class="btn btn-primary">
+                    Write Nutrition Blog
+                </a>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4"></div>
+        </div>
+        <div class="row">
+            {% for blog in all_blog %}
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{{ blog.main_image.url }}" alt="Main Image">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ blog.blog_title }}</h5>
+                            <p class="card-text">{{ blog.blog|truncatewords_html:20 }}</p>
+                            <a href="{% url 'App_blog:blog-details' pk=blog.id %}" class="btn btn-primary">
+                                Read Full Blog
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block js_script %}
+    fruit_shop.classList.remove('active');
+    home.classList.remove('active');
+    about.classList.remove('active')
+    blog.classList.add('active')
+    contact.classList.remove('active')
+    profile.classList.remove('active')
+    cart.classList.remove('active')
+{% endblock %}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    {% load crispy_forms_filters %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Otomanopee+One&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>7 Seasons - The Best Fruit Buying Platform | Signup</title>
+    <style>
+        .container {
+            margin-top: 70px;
+            margin-bottom: 100px;
+        }
+
+        @media only screen and (max-width: 720px) {
+            .container {
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+
+            #hint_id_password1 {
+                font-size: 10px;
+            }
+
+            #hint_id_password2 {
+                font-size: 10px;
+            }
+        }
+
+        .form-container {
+            box-shadow: 0 0 10px #848484;
+        }
+
+        fieldset {
+            padding: 20px;
+        }
+
+        .btn-container {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-12"></div>
+        <div class="col-lg-6 col-md-6 col-sm-12 form-container">
+            <form method="post" class="form-group">
+                {% csrf_token %}
+                <legend class="text-center">Signup Here</legend>
+                <fieldset class="form-group">
+                    {{ form|crispy }}
+                    <input type="checkbox" onclick="showPassword()"><span>&nbsp;Show password</span>
+                </fieldset>
+                <div class="form-group btn-container">
+                    <button class="btn btn-outline-success" type="submit">Submit</button>
+                </div>
+                <p class="text-center"><a href="{% url 'App_login:signup' %}">I don't have any account!</a></p>
+            </form>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12"></div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<!-- Own JS -->
+<script>
+    let pass = document.getElementById('id_password');
+
+    pass.type = 'password';
+    function showPassword() {
+        if (pass.type === 'password') {
+            pass.type = 'text';
+        }
+        else {
+            pass.type = 'password';
+        }
+    }
+</script>
+<!-- End Own JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

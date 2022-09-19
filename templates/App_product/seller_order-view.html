@@ -1,0 +1,142 @@
+{% extends 'sellers/seller_base.html' %}
+{% block title %}
+{% endblock %}
+{% block main %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        table caption {
+            font-size: 1.5em;
+            margin: .5em 0 .75em;
+        }
+
+        table tr {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: .35em;
+        }
+
+        table th,
+        table td {
+            padding: .625em;
+            text-align: center;
+        }
+
+        table th {
+            font-size: .85em;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        @media screen and (max-width: 600px) {
+            table {
+                border: 0;
+            }
+
+            table caption {
+                font-size: 1.3em;
+            }
+
+            table thead {
+                border: none;
+                clip: rect(0 0 0 0);
+                height: 1px;
+                margin: -1px;
+                overflow: hidden;
+                padding: 0;
+                position: absolute;
+                width: 1px;
+            }
+
+            table tr {
+                border-bottom: 3px solid #ddd;
+                display: block;
+                margin-bottom: .625em;
+            }
+
+            table td {
+                border-bottom: 1px solid #ddd;
+                display: block;
+                font-size: .8em;
+                text-align: right;
+            }
+
+            table td::before {
+                /*
+                * aria-label has no advantage, it won't be read inside a table
+                content: attr(aria-label);
+                */
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            table td:last-child {
+                border-bottom: 0;
+            }
+        }
+
+
+        /* general styling */
+        body {
+            font-family: "Open Sans", sans-serif;
+            line-height: 1.25;
+        }
+    </style>
+    <div class="container">
+        <table>
+            <caption>Statement Summary</caption>
+            <thead>
+            <tr>
+                <th scope="col">Order Item</th>
+                <th scope="col">Buyer</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Product Amount</th>
+                <th scope="col">Order Time</th>
+                <th scope="col">Order Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for my_order in my_orders %}
+                <tr>
+                    <td data-label="Order Item">{{ my_order.order_item.item.name }}</td>
+                    <td data-label="Buyer">{{ my_order.user }}</td>
+                    <td data-label="Amount">{{ my_order.get_totals }}</td>
+                    <td data-label="Product Amount">{{ my_order.order_item.quantity }}</td>
+                    <td data-label="Order Time">{{ my_order.created.date }}</td>
+                    <td data-label="Order Status">
+                        <form action="{% url 'App_product:seller-order-update-status' pk=my_order.id %}" method="get" class="form-group">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <select name="status" id="id-status" class="form-control">
+                                        <option value="{{ my_order.status }}">{{ my_order.status }}</option>
+                                        <option value="Confirmed">Confirm</option>
+                                        <option value="Rejected">Reject</option>
+                                        <option value="Completed">Complete</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 p-0">
+                                    <button class="btn btn-outline-warning" type="submit">
+                                        <i class="fa fa-refresh"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+

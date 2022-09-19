@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% block meta %}
+    {% endblock %}
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Otomanopee+One&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>7 Seasons - The Best Fruit Buying Platform
+        {% block title %}
+
+        {% endblock %}
+    </title>
+    <style>
+        a.active {
+            text-decoration: underline;
+            color: #e7d424 !important;
+        }
+
+        #id-centered-menu li {
+            margin: 20px;
+        }
+
+        #id-7seasons {
+            font-family: 'Otomanopee One', sans-serif;
+            padding-left: 100px;
+        }
+
+        #id-7seasons #id-first-part {
+            color: #8b008b;
+        }
+
+        #id-7seasons #id-second-part {
+            color: #5b8200;
+        }
+
+        .collapse {
+            transition: .01ms !important;
+        }
+
+        @media only screen and (max-width: 990px) {
+            #id-centered-menu li {
+                margin: 5px 10px;
+            }
+
+            #id-right-menu li {
+                margin: 5px 10px;
+            }
+
+            #id-right-menu .dropdown-menu {
+                background-color: #181c17;
+                box-shadow: 0 0 5px #fff;
+            }
+        }
+
+        /*------------------------------------------------------------------ Footer Main -------------------------------------------------------------------*/
+        .footer-main {
+            padding: 70px 0px;
+            background: #010101;
+        }
+
+        .footer-main hr {
+            border-top: 1px solid rgba(255, 255, 255, .6);
+        }
+
+        .footer-top-box {
+            margin-bottom: 30px;
+        }
+
+        .footer-top-box h3 {
+            color: #ffffff;
+            position: relative;
+            font-size: 20px;
+        }
+
+        .footer-top-box h3::before {
+            content: "";
+            height: 3px;
+            width: 50%;
+            position: absolute;
+            bottom: 3px;
+            left: 0px;
+        }
+
+        .list-time {
+            margin-top: 15px;
+            padding-left: 0 !important;
+        }
+
+        .footer-top-box .list-time li {
+            color: #ffffff;
+            font-size: 16px;
+            display: block;
+            float: none;
+        }
+
+        .newsletter-box {
+            margin-top: 15px;
+            position: relative;
+        }
+
+        .newsletter-box input {
+            height: 40px;
+            border: none;
+            padding: 0 10px;
+            background: transparent;
+            border-radius: 0;
+            background: #fff;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .newsletter-box i {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 20px;
+        }
+
+        .newsletter-box button {
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 500;
+
+        }
+
+        .footer-top-box p {
+            padding-bottom: 15px;
+            color: #cccccc;
+        }
+
+        .footer-top-box ul {
+            display: inline-block;
+        }
+
+        .footer-top-box ul li {
+            float: left;
+            margin-right: 5px;
+        }
+
+        .footer-top-box ul li a {
+            color: #ffffff;
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            border: 2px solid #ffffff;
+            text-align: center;
+            line-height: 32px;
+        }
+
+        .footer-top-box ul li a:hover {
+            color: #b0b435;
+            border-color: #b0b435;
+        }
+
+        /*------------------------------------------------------------------ Copyright -------------------------------------------------------------------*/
+        .footer-copyright {
+            background: #060606;
+            padding: 20px 0px;
+            position: relative;
+        }
+
+        .footer-copyright p {
+            text-align: center;
+            color: #ffffff;
+            font-size: 16px;
+        }
+
+        .footer-copyright p a {
+            color: #ffffff;
+        }
+
+        .footer-copyright p a:hover {
+            color: #b0b435;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #fdfdfd;
+            font-size: 24px !important;
+            font-weight: bold !important;
+        }
+
+        .navbar-brand {
+            margin-left: 30px !important;
+        }
+
+        .logo-7-seasons {
+            width: 70px;
+            height: 70px;
+            margin-left: 35px;
+        }
+
+        .navbar-brand h4 {
+            color: #fff;
+            margin-top: -10px;
+            font-size: 22px !important;
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header>
+    <nav class="navbar navbar-expand-lg" style="background-color: #245105; height: 100px;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'App_product:home' %}" id="id-7seasons">
+                <img class="logo-7-seasons" src="{% static 'images/orange_logo_3.png' %}" alt="Seven Seasons logo">
+                <h4>7 Seasons</h4>
+                {#                <span id="id-first-part">7Sea</span><span id="id-second-part">sons</span>#}
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0" id="id-centered-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" id="id-home" aria-current="page" href="{% url 'App_product:home' %}">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'App_login:about' %}" id="id-about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'App_product:fruit-shop' %}" id="id-fruit-shop">Fruit-Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'App_blog:blogs' %}" id="id-blog">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'App_login:contact-us' %}" id="id-contact">Contact</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav mr-auto" style="padding-right: 100px;" id="id-right-menu">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-cog"></i>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                {% if IsSeller %}
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'App_product:seller-view' %}">
+                                            Seller
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'App_login:become-seller' %}">
+                                            Become a seller
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="{% url 'App_login:profile' %}">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'App_login:logout' %}">
+                                        Sign out
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a href="{% url 'App_login:login' %}" class="nav-link">
+                                <b>Sign-In</b>
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'App_order:cart-showcasing' %}" tabindex="-1"
+                           aria-disabled="true" id="id-cart">
+                            <i class="fa fa-shopping-cart">
+                                {% if user.is_authenticated and cart_item %}
+                                    <sup style="color: green">({{ cart_item }})</sup>
+                                {% else %}
+                                    <sup style="color: red">(0)</sup>
+                                {% endif %}
+                            </i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<!-- main -->
+{% block main %}
+{% endblock %}
+
+<!-- Start Footer  -->
+<footer>
+    <div class="footer-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-top-box">
+                        <h3>Business Time</h3>
+                        <ul class="list-time">
+                            <li>(Saturday - Thursday): 08.00am to 08.00pm</li>
+                            <li>(Friday): 08.00am to 12.00pm</li>
+                            <li>(Friday): After 12.00pm <span>Closed</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-top-box">
+                        <h3>For Special Advertisement</h3>
+                        <form class="newsletter-box">
+                            <div class="form-group">
+                                <input class="form-control" type="email" name="Email" placeholder="Email Address*"
+                                       style="margin: 10px 0;"/>
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-outline-light text-center hvr-hover" type="submit">Submit
+                                </button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12 pl-5">
+                    <div class="footer-top-box" style="padding-left: 60px;">
+                        <h3>Social Media</h3>
+                        <p>You can be connected with us on social media</p>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li>
+                                <a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+</footer>
+<!-- Start copyright  -->
+<div class="footer-copyright">
+    <p class="footer-company">Copy Rights Reserved. &copy; 2021 <a href="#">Desi Girls Coder</a>
+</div>
+<!-- End copyright  -->
+<!-- End Footer  -->
+<!-- JavaScript -->
+<script type="text/javascript">
+    let home = document.getElementById('id-home');
+    let about = document.getElementById('id-about');
+    let fruit_shop = document.getElementById('id-fruit-shop');
+    let blog = document.getElementById('id-blog');
+    let contact = document.getElementById('id-contact');
+    let cart = document.getElementById('id-cart');
+    let profile = document.getElementById('navbarDropdown');
+    {% block js_script %}
+    {% endblock %}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

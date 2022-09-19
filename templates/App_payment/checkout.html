@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% block title_block %}
+    Checkout
+{% endblock %}
+{% block main %}
+    <style>
+        .item-details {
+            font-weight: bold;
+            float: left;
+        }
+
+        .item-price {
+            font-weight: bold;
+            float: right;
+        }
+    </style>
+
+    <div class="container">
+        <h2 class="mb-3">
+            Shipping Address > <span class="text-muted">Checkout</span>
+        </h2>
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-12">
+                <div class="card mb-5" style="height: auto;">
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <fieldset class="form-group">
+                                <legend>Information</legend>
+                                {{ form|crispy }}
+                            </fieldset>
+                            <div class="form-group mt-3">
+                                <button type="submit" class="btn btn-primary float-right">Save Address</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-mb-4 col-sm-12">
+                <div class="card" style="height: auto;">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            {% for cart in carts %}
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-4">
+                                        <p class="item-details">
+                                            {{ cart.item.name }} x {{ cart.quantity }}
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-4">
+                                        <p class="item-price">
+                                            ৳ {{ cart.get_total }}
+                                        </p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <hr>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-4">
+                                    <span class="item-details">Delivery Charge</span>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-4">
+                                    <span class="item-price">৳ {{ delivery_charge|floatformat:2 }}</span>
+                                </div>
+                            </div>
+
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <span class="float-left"><b>Order Total</b>&nbsp;</span>
+                        <span style="float: right;"><b>&nbsp;<b>৳</b> {{ total_price|floatformat:2 }}</b></span>
+                    </div>
+                </div>
+                <hr>
+                {% if saved_address.is_full_filled %}
+                    <form action="{% url 'App_payment:payment' %}" method="post">
+                        {% csrf_token %}
+                        <input type="text" value="{{ total_price }}" name="total_price" style="display: none;">
+                        <button type="submit" class="btn btn-warning btn-lg">Make Payment</button>
+                    </form>
+                {% else %}
+                    <div class="alert alert-info">Ensure that your profile is full filled</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let phn_country = document.getElementById('id_phone_number_0');
+        let phn_field = document.getElementById('id_phone_number_1');
+        phn_country.classList.add('form-control');
+        phn_country.style.width = '30%';
+        phn_country.style.marginBottom = '5px';
+        phn_field.classList.add('form-control');
+        phn_field.style.width = "70%";
+    </script>
+{% endblock %}

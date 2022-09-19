@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% block meta %}
+
+{% endblock %}
+{% block title %}
+
+{% endblock %}
+{% block main %}
+    <style>
+        .btn-form-submit {
+            background-color: #00795c;
+        }
+
+        .shop-name {
+            margin: 200px auto;
+        }
+
+        .form-controler {
+            padding: 50px;
+            box-shadow: 0 0 10px #1b6d85;
+        }
+    </style>
+    <div class="container shop-name">
+        <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6 form-controler">
+                <form method="post" class="form-group">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        {{ form|crispy }}
+                    </fieldset>
+                    <div class="form-group mt-2 mb-2">
+                        <button type="submit" class="btn btn-form-submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3"></div>
+        </div>
+    </div>
+{% endblock %}
